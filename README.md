@@ -19,10 +19,10 @@ function aoc() {
 	# "aoc o" - opens Advent of Code folder withing the IDE/Editor ONLY
 
 	# REPLACE with your name, and uncomment or add your IDE/Editor of choice
-	cd /Users/fischfood/Advent\ of\ Code;
+    cd /Users/fischfood/Advent\ of\ Code;
     # open -a "Phpstorm.app" .;
     # open -a "Sublime Text.app" .;
-	# open -a "Visual Studio Code.app" .;
+    # open -a "Visual Studio Code.app" .;
     # END REPLACE #
 
 	DAY=$1
@@ -71,3 +71,19 @@ function aoc() {
 	fi
 }
 ```
+
+## File Watching
+If you are using a file watcher, such as the extension through Visual Studio Code, you can have the code auto run for you.
+Using that extension, open up your settings.json file and add this snippet to filewatcher.commands:
+
+```"filewatcher.commands": [
+        {
+			"match": "Advent (.*) Code/(.*)/(.*)\\.php",
+			"isAsync": true,
+			"cmd": "cd \"${fileDirname}\"; php -r 'require \"${fileBasename}\";' ",
+			"event": "onFileChange",
+		}
+    ],
+```
+
+Now every time you save a YYYY/DD.php file, it will auto run for you. If you don't see the window, go to Terminal in the top bar, and select "New Terminal". Once this appears, switch to the OUTPUT tab, and change the dropdown on the right to "File Watcher"
