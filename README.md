@@ -76,14 +76,15 @@ function aoc() {
 If you are using a file watcher, such as the extension through Visual Studio Code, you can have the code auto run for you.
 Using that extension, open up your settings.json file and add this snippet to filewatcher.commands:
 
-```"filewatcher.commands": [
-        {
-			"match": "Advent (.*) Code/(.*)/(.*)\\.php",
-			"isAsync": true,
-			"cmd": "cd \"${fileDirname}\"; php -r 'require \"${fileBasename}\";' ",
-			"event": "onFileChange",
-		}
-    ],
+```
+"filewatcher.commands": [
+    {
+        "match": "Advent (.*) Code/(.*)/(.*)\\.php",
+        "isAsync": true,
+        "cmd": "cd \"${fileDirname}\"; php -r 'require \"${fileBasename}\";' ",
+        "event": "onFileChange",
+    }
+],
 ```
 
 Now every time you save a YYYY/DD.php file, it will auto run for you. If you don't see the window, go to Terminal in the top bar, and select "New Terminal". Once this appears, switch to the OUTPUT tab, and change the dropdown on the right to "File Watcher"
