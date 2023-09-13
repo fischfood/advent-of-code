@@ -90,7 +90,7 @@ function part_two($dataset) {
 
     // Count how many unique visits there are
     return sprintf(
-        'Santa visited %d houses',
+        'Santa and Robo Santa visited %d houses',
         sizeof( array_unique( $visited ) )
     );
 }
