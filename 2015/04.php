@@ -25,7 +25,14 @@ function part_one($key) {
 
 // Part Two
 function part_two($key) {
-	# Do More Things
+	for ( $i = 0; $i < INF; $i++ ) {
+        
+        $hash = md5( $key . $i );
+
+        if ( substr( $hash, 0, 6) === '000000' ) {
+            return sprintf( 'The lowest integer for six zeroes is %d with a hash of %s', $i, $hash );
+        }
+    }
 }
 
 echo PHP_EOL . 'Day 04: TITLE' . PHP_EOL;
