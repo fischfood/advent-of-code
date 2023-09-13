@@ -23,6 +23,8 @@ function part_two($dataset) {
 	# Do More Things
 }
 
-echo PHP_EOL . 'Day DAY: TITLE' . PHP_EOL;
-echo 'Part 1: ' . part_one($dataset) . PHP_EOL;
-echo 'Part 2: ' . part_two($dataset) . PHP_EOL . PHP_EOL;
+echo PHP_EOL . 'Day 05: TITLE' . PHP_EOL . 'Part 1: ';
+part_one($dataset);
+echo PHP_EOL . 'Part 2: ';
+part_two($dataset);
+echo PHP_EOL . PHP_EOL;
