@@ -20,14 +20,20 @@ function part_one($rows) {
 
     $part_numbers = check_for_parts( $numbers, $symbols );
 
-    echo implode( ', ', $part_numbers );
-
     echo array_sum( $part_numbers );
 }
 
 // Part Two
 function part_two($rows) {
-	# Do More Things
+
+    $num_sym = build_map( $rows );
+
+    $numbers = $num_sym[0];
+    $symbols = $num_sym[1];
+
+    $gear_numbers = check_for_gears( $numbers, $symbols );
+
+    echo array_sum( $gear_numbers );
 }
 
 function build_map( $rows ) {
@@ -49,6 +55,14 @@ function build_map( $rows ) {
 
                 $staged .= $char;
                 $staged_pos[] = $pos . ',' . $rnum;
+
+                // If last number in a row, make sure to submit it
+                // This failed for me for way too long...
+                if ( $pos + 1 === count($row) ) {
+                    $numbers[$i . '_' . $rnum . '-' . $staged] = $staged_pos;
+                    $staged = '';
+                    $staged_pos = [];
+                }
             
             } else {
 
@@ -101,6 +115,37 @@ function check_for_parts( $numbers, $symbols ) {
     }
     
     return $part_numbers;
+}
+
+function check_for_gears( $numbers, $symbols ) {
+
+    $gear_numbers = [];
+    
+    foreach( $symbols as $symbol ) {
+        $maybe_gears = [];
+
+        if ( '*' === $symbol[2] ) {
+
+            for ( $x = -1; $x <= 1; $x++ ) {
+                for ( $y = -1; $y <= 1; $y++ ) {
+                    $coord_to_check =  ($symbol[0]) + $x . ',' . ($symbol[1] + $y);
+                    
+                    foreach( $numbers as $number => $coords ) {
+                        if ( in_array( $coord_to_check, $coords ) ) {
+                            unset( $numbers[$number] );
+                            $maybe_gears[] = substr($number, strpos($number, "-") + 1);
+                        }
+                    }
+                }
+            }
+        }
+
+        if ( count( $maybe_gears ) === 2 ) {
+            $gear_numbers[] = $maybe_gears[0] * $maybe_gears[1];
+        }
+    }
+    
+    return $gear_numbers;
 }
 
 echo PHP_EOL . 'Day 03: Gear Ratios' . PHP_EOL . 'Part 1: ';
