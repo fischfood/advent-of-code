@@ -6,7 +6,7 @@
 
 // The usual
 $data = file_get_contents('data/data-DAY.txt');
-//$data = file_get_contents('data/data-DAY-sample.txt');
+$data = file_get_contents('data/data-DAY-sample.txt');
 
 $rows = explode("\n", $data);
 $steps = str_split($data, 1);
