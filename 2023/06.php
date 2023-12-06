@@ -21,7 +21,7 @@ function part_one($rows) {
     // Records are a bell curve
     foreach( $time_limit as $k => $time ) {
         $winning_times[$k] = 0;
-        for ( $hold = 1; $hold < round( $time / 2 ); $hold++ ) {
+        for ( $hold = 1; $hold < ( $time / 2 ); $hold++ ) {
 
             $total_distance = ( $time - $hold ) * $hold;
             if ( $total_distance > $records[$k] ) {
