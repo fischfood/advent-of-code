@@ -12,7 +12,6 @@ $rows = explode("\n", $data);
 
 // Part One
 function part_one($rows) {
-
     $total = 0;
     $hands = generate_hands( $rows );
 
@@ -21,12 +20,10 @@ function part_one($rows) {
     }
 
     echo $total;
-
 }
 
 // Part Two
 function part_two( $rows ) {
-	
     $total = 0;
     $hands = generate_joker_hands( $rows );
 
@@ -70,7 +67,7 @@ function generate_hands( $data ) {
                 $type = '1'; break;
         }
 
-        $hand_value_hex = $type . str_pad( $card_hex, 5, 0, STR_PAD_LEFT );
+        $hand_value_hex = $type . $card_hex;
         $hands[ base_convert( $hand_value_hex, 16, 10)] = $bet;
         
     }
@@ -101,12 +98,7 @@ function generate_joker_hands( $data ) {
         $strength = implode( '', $card_counts );
 
         switch( $strength ) {
-            case '5': // 5 or any cards fill jokers
-            case '4': // AAAAJ
-            case '3': // AAAJJ
-            case '2': // AAJJJ
-            case '1': // AJJJJ
-                $type = '7'; break;
+            // 5 of a kind is now default
             case '41': // 4 of a kind 
             case '31': // AAA2J
             case '21': // AA2JJ
@@ -126,7 +118,7 @@ function generate_joker_hands( $data ) {
                 $type = '2'; break;
             case '11111': // High - Joker will always bring to a pair
                 $type = '1'; break;
-            default: // JJJJJ
+            default: // All 5 of a Kind
                 $type = '7'; break;
         }
 
