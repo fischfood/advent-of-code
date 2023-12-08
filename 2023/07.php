@@ -93,8 +93,6 @@ function generate_joker_hands( $data ) {
         unset( $card_counts[74]);
         arsort( $card_counts );
 
-        //print_r( $card_counts );
-
         $strength = implode( '', $card_counts );
 
         switch( $strength ) {
