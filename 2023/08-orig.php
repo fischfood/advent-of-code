@@ -48,45 +48,31 @@ function part_one($rows) {
 function part_two($rows) {
 	
     [$directions, $paths, $starts, $ends] = get_direction_paths($rows);
-    
+
+    $num_starts = count( $starts );
+    $i = 0;
+    $total = 0;
     $dir = str_split( $directions );
-    $path_to_z = [];
 
+    while ( $i < count( $dir ) ) {
+        $total++;
+        $ending = '';
 
-    foreach( $starts as $start ) {
-
-        $i = 0;
-        $total = 0;
-        $this_start = $start;
-
-        while ( $i < count( $dir ) ) {
-
-            if ( $this_start[2] === 'Z' ) {
-                $path_to_z[] = $total;
-                $i = count( $dir );
-            } else {
-                $this_start = $paths[$this_start][$dir[$i]];
-            }
-
-            $total++;
-
-            if ( $i === count( $dir ) - 1 ) {
-                $i = 0;
-                continue;
-            }
-
-            $i++;
-
+        for ( $s = 0; $s < $num_starts; $s++ ) {
+            $starts[$s] = $paths[$starts[$s]][$dir[$i]];
+            $ending .= $starts[$s][2];
         }
+
+        if ( $i === count( $dir ) - 1 && $ending !== str_pad('', $num_starts, 'Z') ) {
+            $i = 0;
+            continue;
+        }
+
+        $i++;
+
     }
 
-    $lcm = $path_to_z[0];
-
-    foreach( $path_to_z as $t ) {
-        $lcm = gmp_lcm( $lcm, $t );
-    }
-
-    echo $lcm;
+    echo $total;
 
 }
 
@@ -117,7 +103,7 @@ function get_direction_paths( $rows ) {
 }
 
 echo PHP_EOL . 'Day 08: Haunted Wasteland' . PHP_EOL . 'Part 1: ';
-part_one($rows);
+//part_one($rows);
 echo PHP_EOL . 'Part 2: ';
 part_two($rows);
 echo PHP_EOL . PHP_EOL;
