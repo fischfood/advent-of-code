@@ -6,7 +6,7 @@
 
 // The usual
 $data = file_get_contents('data/data-11.txt');
-$data = file_get_contents('data/data-11-sample.txt');
+//$data = file_get_contents('data/data-11-sample.txt');
 
 $rows = explode("\n", $data);
 
@@ -14,7 +14,23 @@ $rows = explode("\n", $data);
 function part_one($rows) {
     
     $expanded = expand_universe( $rows );
-    //print_r( $expanded );
+    $galaxies = find_galaxies( $expanded );
+
+    $total_steps = [];
+
+    // For each Galaxy
+    for ( $g = 0; $g < count( $galaxies ); $g++ ) {
+
+        // Get distance to remaining galaxies
+        for ( $ng = $g + 1; $ng < count( $galaxies ); $ng++ ) {
+            //echo PHP_EOL . $galaxies[$g][0] . ',' . $galaxies[$g][1];
+            //echo PHP_EOL . $galaxies[$ng][0] . ',' . $galaxies[$ng][1];
+            
+            $total_steps["$g-$ng"] = abs( $galaxies[$ng][0] - $galaxies[$g][0] ) + abs( $galaxies[$ng][1] - $galaxies[$g][1] );
+        }
+    }
+
+    echo array_sum( $total_steps );
 }
 
 // Part Two
@@ -56,6 +72,20 @@ function expand_universe( $rows ) {
     }
 
     return $rows;
+}
+
+function find_galaxies( $universe ) {
+    $galaxies = [];
+
+    foreach( $universe as $y => $columns ) {
+        foreach( str_split( $columns ) as $x => $symbol ) {
+            if ( '#' === $symbol ) {
+                $galaxies[] = [$x, $y];
+            }
+        }
+    }
+
+    return $galaxies;
 }
 
 echo PHP_EOL . 'Day 11: Cosmic Expansion' . PHP_EOL . 'Part 1: ';
