@@ -13,40 +13,32 @@ $rows = explode("\n", $data);
 // Part One
 function part_one($rows) {
     
-    $expanded = expand_universe( $rows );
-    $galaxies = find_galaxies( $expanded );
+    [$expanded_rows, $expanded_cols] = expand_universe( $rows );
+    $galaxies = find_galaxies( $rows );
 
-    $total_steps = [];
-
-    // For each Galaxy
-    for ( $g = 0; $g < count( $galaxies ); $g++ ) {
-
-        // Get distance to remaining galaxies
-        for ( $ng = $g + 1; $ng < count( $galaxies ); $ng++ ) {
-            //echo PHP_EOL . $galaxies[$g][0] . ',' . $galaxies[$g][1];
-            //echo PHP_EOL . $galaxies[$ng][0] . ',' . $galaxies[$ng][1];
-            
-            $total_steps["$g-$ng"] = abs( $galaxies[$ng][0] - $galaxies[$g][0] ) + abs( $galaxies[$ng][1] - $galaxies[$g][1] );
-        }
-    }
-
-    echo array_sum( $total_steps );
+    echo traverse_the_universe( $galaxies, $expanded_rows, $expanded_cols, 2 );
+    
 }
 
 // Part Two
 function part_two($rows) {
-	# Do More Things
+    
+    [$expanded_rows, $expanded_cols] = expand_universe( $rows );
+    $galaxies = find_galaxies( $rows );
+
+    echo traverse_the_universe( $galaxies, $expanded_rows, $expanded_cols, 1000000 );
 }
 
 function expand_universe( $rows ) {
 
+    $expanded_rows = [];
+    $expanded_columns = [];
     $columns = [];
 
-    // Add Rows
+    // Find Empty Rows
     for ( $r = 0; $r < count( $rows ); $r++ ) {
         if ( count( array_unique( str_split( $rows[$r] ) ) ) === 1 ) {
-            array_splice( $rows, $r, 0, $rows[$r] );
-            $r++;
+            $expanded_rows[] = $r;
         }
     }
 
@@ -57,21 +49,14 @@ function expand_universe( $rows ) {
         }
     }
 
-    $rev_cols = array_reverse( $columns, true );
-
-    foreach( $rev_cols as $col => $values ) {
+    // Find Empty Columns
+    foreach( $columns as $col => $values ) {
         if ( count( array_unique( $values ) ) === 1 ) {
-            foreach( $rows as $k => $row ) {
-                $row_split = str_split( $row );
-
-                array_splice( $row_split, $col, 0, '.' );
-
-                $rows[$k] = implode( '', $row_split );
-            }
+            $expanded_cols[] = $col;
         }
     }
 
-    return $rows;
+    return [$expanded_rows, $expanded_cols];
 }
 
 function find_galaxies( $universe ) {
@@ -86,6 +71,51 @@ function find_galaxies( $universe ) {
     }
 
     return $galaxies;
+}
+
+function traverse_the_universe( $galaxies, $ex_rows, $ex_cols, $expansion = 2 ) {
+
+    $add = $expansion - 1;
+    $total_steps = [];
+
+    // For each Galaxy
+    for ( $g = 0; $g < count( $galaxies ); $g++ ) {
+
+        // Get distance to remaining galaxies
+        for ( $ng = $g + 1; $ng < count( $galaxies ); $ng++ ) {
+
+            $distance = abs( $galaxies[$ng][0] - $galaxies[$g][0] ) + abs( $galaxies[$ng][1] - $galaxies[$g][1] );
+
+            // Get and sort X and Y coords
+            $xs = [$galaxies[$ng][0], $galaxies[$g][0]];
+            $ys = [$galaxies[$ng][1], $galaxies[$g][1]];
+
+            // Order low to high
+            asort( $xs );
+            asort( $ys );
+
+            $xs = array_values($xs);
+            $ys = array_values($ys);
+
+            // If an expansion row is in between the two coordinates
+            foreach( $ex_cols as $ex_c ) {
+                if ( $ex_c > $xs[0] && $ex_c < $xs[1] ) {
+                    $distance += $add;
+                }
+            }
+
+            foreach( $ex_rows as $ex_r ) {
+                if ( $ex_r > $ys[0] && $ex_r < $ys[1] ) {
+                    $distance += $add;
+                }
+            }
+            
+            $total_steps["$g-$ng"] = $distance;
+        }
+    }
+
+    return array_sum( $total_steps );
+
 }
 
 echo PHP_EOL . 'Day 11: Cosmic Expansion' . PHP_EOL . 'Part 1: ';
