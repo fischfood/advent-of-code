@@ -8,7 +8,7 @@ ini_set('memory_limit', '10G');
 
 // The usual
 $data = file_get_contents('data/data-14.txt');
-$data = file_get_contents('data/data-14-sample.txt');
+//$data = file_get_contents('data/data-14-sample.txt');
 
 $rows = explode("\n", $data);
 
@@ -99,6 +99,7 @@ function spin( $rows, $repeat = 1 ) {
 
     $results = [];
     $repeats_every = '';
+    $first_repeat = 0;
 
     for ( $s = 1; $s <= $repeat; $s++) {
 
@@ -118,8 +119,12 @@ function spin( $rows, $repeat = 1 ) {
 
             $rows = set_north( $rows ); 
 
+            $total_repeat = 0;
+
             for ( $check = count($results); $check > 0; $check-- ) {
                 if ( $rows === $results[$check - 1] ) {
+
+                    $first_repeat = $check;
                     $repeats_every = $s - $check;
                 }
             }
@@ -131,14 +136,20 @@ function spin( $rows, $repeat = 1 ) {
         }
     }
 
-    $first_repeat = $repeat % $repeats_every;
+    //echo $first_repeat;
+
+    $repeat_mod = $repeat % $repeats_every;
+
+    $min = floor( $first_repeat / $repeats_every );
+
+    $matching = ($min * $repeats_every) + $repeat_mod;
 
     foreach( $results as $k => $r ) {
         //echo PHP_EOL . $k . ' - ' . get_load( $results[$k]);
         //echo output( $r );
     }
 
-    echo get_load( $results[$first_repeat - 1]);
+    echo get_load( $results[$matching - 1]);
 
 }
 
