@@ -18,6 +18,9 @@ function part_one($rows) {
 
     $start = ['0,0'];
     $end = [ count($get_grid[0]) . ',' . count( $get_grid) ];
+
+    print_r( $start );
+    print_r( $end );
 }
 
 // Part Two
