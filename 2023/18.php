@@ -29,10 +29,20 @@ function part_one($rows) {
 
 // Part Two
 function part_two($rows) {
+
+    [$grid, $sides] = get_perimeter( $rows, 'hex' );
+    $total_area = shoelace( $grid );
+
+    $inner_corners = count( $grid ) - 1;
+    
+    $inner_add = ( $inner_corners / 2 ) - 2;
+    $outer_add = ( $inner_corners / 2 ) + 2;
+    
+    echo $total_area + ( $sides / 2 ) + ( $inner_add * .25 ) + ( $outer_add * .75 );
     
 }
 
-function get_perimeter( $rows ) {
+function get_perimeter( $rows, $hex = false ) {
     $corners = [ [0,0] ];
     $sides = 0;
 
@@ -46,13 +56,20 @@ function get_perimeter( $rows ) {
         $length = $row[1];
         $color = preg_replace( '/[^a-z0-9]/', '', $row[2] );
 
+        if ( $hex == true ) {
+            $new_data = str_split( $color, 5 );
+            $dir = $new_data[1];
+
+            $length = base_convert( $new_data[0], 16, 10 );
+        }
+
         $sides += $length - 1;
 
         // Assume inner is down/right from start
-        if ( $dir === 'L' ) { $x -= $length; }
-        if ( $dir === 'R' ) { $x += $length; }
-        if ( $dir === 'U' ) { $y -= $length; }
-        if ( $dir === 'D' ) { $y += $length; }
+        if ( $dir === 'L' || $dir === '2' ) { $x -= $length; }
+        if ( $dir === 'R' || $dir === '0' ) { $x += $length; }
+        if ( $dir === 'U' || $dir === '3' ) { $y -= $length; }
+        if ( $dir === 'D' || $dir === '1' ) { $y += $length; }
 
         $corners[] = [ $x, $y ];
     }
