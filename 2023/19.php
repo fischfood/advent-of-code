@@ -24,6 +24,14 @@ function part_one($dataset) {
 
 // Part Two
 function part_two($dataset) {
+
+    for ( $x = 1; $x <= 4000; $x++ ) {
+        for ( $m = 1; $m <= 4000; $m++ ) {
+            //for ( $a = 1; $a <= 4000; $a++ ) {
+                
+            //}
+        }
+    }
 	# Do More Things
 }
 
