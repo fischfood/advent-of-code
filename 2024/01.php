@@ -41,8 +41,8 @@ function part_one($dataset) {
 
 // Part Two
 function part_two($dataset) {
-    
-	$a = [];
+
+    $a = [];
     $b = [];
     $total = 0;
 
