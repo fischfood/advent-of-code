@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Day 02: TITLE
+ * Day 02: Red-Nosed Reports
  */
 
 // The usual
@@ -71,7 +71,7 @@ function check( $row ) {
             if ( $num < $start && $dir !== 'inc' && ( $start - $num < 4 ) ) {
                 $dir = 'dec';
                 $start = $num;
-            } elseif ( $num > $start && $dir !== 'dec' && $num - $start < 4 ) {
+            } elseif ( $num > $start && $dir !== 'dec' && ( $num - $start < 4 ) ) {
                 $dir = 'inc';
                 $start = $num;
             } else {                
@@ -83,7 +83,7 @@ function check( $row ) {
     return 1;
 }
 
-echo PHP_EOL . 'Day 02: TITLE' . PHP_EOL . 'Part 1: ';
+echo PHP_EOL . 'Day 02: Red-Nosed Reports' . PHP_EOL . 'Part 1: ';
 part_one($dataset);
 echo PHP_EOL . 'Part 2: ';
 part_two($dataset);
