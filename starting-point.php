@@ -12,6 +12,7 @@ $rows = explode("\n", $data);
 $steps = str_split($data, 1);
 
 $dataset = $rows;
+include_once( '../functions.php' );
 
 // Part One
 function part_one($dataset) {
