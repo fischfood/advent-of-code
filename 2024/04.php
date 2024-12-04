@@ -41,7 +41,7 @@ function part_one($dataset) {
             [1,-1],[1,0],[1,1],
         ];
 
-        // Check each direction change for a M
+        // Check each direction change for the M
         foreach( $check as $dir ) {
             list( $change_x, $change_y ) = $dir;
             $m_x = $x + $change_x;
