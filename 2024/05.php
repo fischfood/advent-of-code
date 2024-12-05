@@ -1,10 +1,13 @@
 <?php
 
 /**
- * Day 05: TITLE
+ * Day 05: Print Queue
+ * Part 1: 0.00838 Seconds
+ * Part 2: 0.02415 Seconds
  */
 
 // The usual
+$starttime = microtime(true);
 $data = file_get_contents('data/data-05.txt');
 //$data = file_get_contents('data/data-05-sample.txt');
 
@@ -169,8 +172,10 @@ function determine_if_order_passes( $line, $nums ) {
     return $pass;
 }
 
-echo PHP_EOL . 'Day 05: TITLE' . PHP_EOL . 'Part 1: ';
+echo PHP_EOL . 'Day 05: Print Queue' . PHP_EOL . 'Part 1: ';
 part_one($dataset);
 echo PHP_EOL . 'Part 2: ';
 part_two($dataset);
-echo PHP_EOL . PHP_EOL;
+echo PHP_EOL;
+echo 'Total time to generate: ' . ( microtime( true ) - $starttime );
+echo PHP_EOL;
