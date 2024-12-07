@@ -3,7 +3,7 @@
 /**
  * Day 07: Bridge Repair
  * Part 1: 1.93656 Seconds
- * Part 2: 109.60698 Seconds
+ * Part 2: 72.75729 Seconds
  */
 
 // The usual
@@ -17,7 +17,9 @@ $steps = str_split($data, 1);
 $dataset = $rows;
 
 // Part One
-function part_one($dataset) {
+function part_one($dataset, $for = 'p1') {
+
+    $pass = 0;
 
     // Operations we're using
     $try = ['*','+'];
@@ -68,20 +70,29 @@ function part_one($dataset) {
 
             // If we hit a success, add it and break out
             if ( $eval == $total ) {
+                unset( $dataset[$k] );
                 $sum += $total;
                 break;
             }
         }
     }
 
-    echo $sum;
+    if ( $for === 'p1') {
+        echo $sum;
+    } else {
+        return [$dataset, $sum];
+    }
 }
 
 // Part Two
-function part_two($dataset) {
+function part_two( $p1 ) {
+
+    // Use data from part one
+    $dataset = $p1[0];
+    $sum = $p1[1];
+
     // Operations we're using, now adding a third (but we won't reference it)
     $try = ['+','*','||'];
-    $sum = 0;
 
     foreach( $dataset as $k => $d ) {
         list( $total, $numbers ) = explode( ': ', $d );
@@ -139,7 +150,7 @@ function part_two($dataset) {
 echo PHP_EOL . 'Day 07: Bridge Repair' . PHP_EOL . 'Part 1: ';
 part_one($dataset);
 echo PHP_EOL . 'Part 2: ';
-part_two($dataset);
+part_two( part_one($dataset, 'p2' ) );
 echo PHP_EOL;
 echo 'Total time to generate: ' . ( microtime( true ) - $starttime );
 echo PHP_EOL;
