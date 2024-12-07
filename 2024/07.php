@@ -91,7 +91,7 @@ function part_two($dataset) {
 
         // Again, We need to figure out how many operators are needed
         // For x + y, it's one, for x + y + z, it's two
-        // Now, for x,y we need to check x*y (0), x+y (1), and x||y
+        // Now, for x,y we need to check x*y (0), x+y (1), and x||y (2)
         // for x,y,z, we need to check || ||, ||+, ||*, +||, ++, +*, *||, *+, and ** (22, 21, 20, 12, 11, 10, 02, 01, 00);
         // Where binary has 0 and 1, ternary (base 3) has 0, 1, and 2
         $op_ternary_total = count( str_split( str_pad( decbin( pow( 2, $count ) - 1 ), $count, 0 ) ) );
