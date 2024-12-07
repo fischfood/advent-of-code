@@ -79,7 +79,7 @@ function part_one($dataset) {
 
 // Part Two
 function part_two($dataset) {
-	// Operations we're using, now adding a third (but we won't reference it)
+    // Operations we're using, now adding a third (but we won't reference it)
     $try = ['+','*','||'];
     $sum = 0;
 
