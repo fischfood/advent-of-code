@@ -38,7 +38,7 @@ function part_one($dataset) {
         // This $op_binary_total will get the total spaces needed so we always have 0's in front
         $op_binary_total = count( str_split( str_pad( decbin( pow( 2, $count ) - 1 ), $count, 0 ) ) );
 
-        // 1 = 1, 11 = 3, 111 = 7, 111 = 15
+        // 1 = 1, 11 = 3, 111 = 7, 1111 = 15
         // This is 2^1 - 1, 2^2 - 1, 2^3 - 1, and 2^4 - 1
         // We'll make this our total, and split to binary within
         for ( $i = ( pow( 2, $count ) - 1 ); $i >= 0; $i-- ) {
