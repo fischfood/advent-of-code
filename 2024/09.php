@@ -27,12 +27,10 @@ function part_one($dataset) {
 
     foreach( $dataset as $k => $d ) {
         if ( $k % 2 ) {
-            $string .= str_repeat( '.', intval( $d ) );
             for ( $num = 0; $num < $d; $num++ ) {
                 $blocks[] = '.';
             }
         } else {
-            $string .= str_repeat( $i, intval( $d ) );
             for ( $num = 0; $num < $d; $num++ ) {
                 $blocks[] = $i;
             }
@@ -66,7 +64,54 @@ function part_one($dataset) {
 
 // Part Two
 function part_two($dataset) {
-	
+	$i = 0;
+    $string = '';
+    $total = 0;
+
+    $blocks = [];
+
+    foreach( $dataset as $k => $d ) {
+        if ( $d != 0 ) {
+            if ( $k % 2 ) {
+                $string .= str_repeat( '.', intval( $d ) );
+                $blocks[] = str_repeat('.', $d );
+            } else {
+                $string .= str_repeat( $i, intval( $d ) );
+                $blocks[] = str_repeat($i, $d );
+                $i++;
+            }
+        }
+        
+    }
+
+    // print_r( $blocks );
+
+    // $string = implode('', $blocks );
+    // echo $string;
+
+    // while( str_contains( $string, '.' )) {
+    //     echo "\n";
+
+    //     $next_pos = array_search( '.', $blocks );
+    //     $last = end( $blocks );
+
+    //     echo $last;
+
+    //     if ( ! str_contains( $last, '.' ) ) {
+    //         $blocks[ $next_pos ] = $last;
+
+    //         echo "want to move $last to $next_pos";
+    //     }
+
+    //     array_pop( $blocks );
+    //     $string = implode( '', $blocks );
+    // }
+
+    // foreach( $blocks as $k => $b ) {
+    //     $total += ( $k * $b );
+    // }
+
+    //echo $total;
 }
 
 echo PHP_EOL . 'Day 09: Disk Fragmenter' . PHP_EOL . 'Part 1: ';
