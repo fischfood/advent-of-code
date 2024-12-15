@@ -1,7 +1,9 @@
 <?php
 
 /**
- * Day 15: TITLE
+ * Day 15: Warehouse Woes
+ * Part 1: 0.01483 Seconds
+ * Part 2: --
  */
 
 // The usual
@@ -20,6 +22,9 @@ function part_one($dataset) {
     $start = [0,0];
     $total = 0;
 
+    // Make dirs one line
+    $dirs = implode( '', explode("\n", $dirs ) );
+
     foreach( explode( "\n", $warehouse ) as $y => $row ) {
         foreach( str_split( $row ) as $x => $char ) {
             $map[$y][$x] = $char;
@@ -29,13 +34,13 @@ function part_one($dataset) {
         }
     }
 
-    show_map( $map );
+    //show_map( $map );
 
     foreach( str_split( $dirs ) as $dir ) {
         [$start, $map] = move_robot( $start, $map, $dir );
     }
 
-    show_map( $map );
+    //show_map( $map );
 
     foreach( $map as $y => $row ) {
         foreach( $row as $x => $char ) {
@@ -57,19 +62,16 @@ function move_robot( $start, $map, $dir ) {
 
     $next = $start;
 
-    switch ($dir) {
-        case '<':
-            $next[0]--;
-            break;
-        case '>':
-            $next[0]++;
-            break;
-        case '^':
-            $next[1]--;
-            break;
-        case 'v':
-            $next[1]++;
-            break;
+    $directions = [
+        '<' => [-1, 0],
+        '>' => [1, 0],
+        '^' => [0, -1],
+        'v' => [0, 1],
+    ];
+
+    if ( isset( $directions[$dir] ) ) {
+        [$dx, $dy] = $directions[$dir];
+        $next = [$start[0] + $dx, $start[1] + $dy];
     }
 
     // Check that block
@@ -105,91 +107,43 @@ function move_boxes( $box_coords, $dir, $map ) {
     $can_move = true;
     [$x, $y] = $box_coords;
 
-    if ( '>' == $dir ) {
-        for ( $i = $x; $i < PHP_INT_MAX; $i++ ) {
-            $next_char = $map[$y][$i];
-
-            // If we hit a wall, stop everything
-            if ( $next_char === '#' ) {
-                $can_move = false;
-                break;
-            }
-
-            $queue[] = [$i,$y];
-
-            // If we hit an open spot, move everything before it
-            if ( $next_char === '.' ) {
-                foreach( $queue as $q ) {
-                    $map[$q[1]][$q[0]] = 'O';
-                }
-                break;
-            }
+    $directions = [
+        '>' => [1, 0], 
+        '<' => [-1, 0],
+        'v' => [0, 1], 
+        '^' => [0, -1],
+    ];
+    
+    [$dx, $dy] = $directions[$dir];
+    $queue = [];
+    
+    for ($i = 1; ; $i++) {
+        $nx = $x + ($i * $dx);
+        $ny = $y + ($i * $dy);
+    
+        // If we go out of bounds, stop
+        if ( ! isset($map[$ny][$nx] ) ) {
+            $can_move = false;
+            break;
         }
-    }
-
-    if ( '<' == $dir ) {
-        for ( $i = $x; $i >= 0; $i-- ) {
-            $next_char = $map[$y][$i];
-
-            // If we hit a wall, stop everything
-            if ( $next_char === '#' ) {
-                $can_move = false;
-                break;
-            }
-
-            $queue[] = [$i,$y];
-
-            // If we hit an open spot, move everything before it
-            if ( $next_char === '.' ) {
-                foreach( $queue as $q ) {
-                    $map[$q[1]][$q[0]] = 'O';
-                }
-                break;
-            }
+    
+        $next_char = $map[$ny][$nx];
+    
+        // If we hit a wall, stop everything
+        if ($next_char === '#') {
+            $can_move = false;
+            break;
         }
-    }
-
-    if ( 'v' == $dir ) {
-        for ( $i = $y; $i < PHP_INT_MAX; $i++ ) {
-            $next_char = $map[$i][$x];
-
-            // If we hit a wall, stop everything
-            if ( $next_char === '#' ) {
-                $can_move = false;
-                break;
+    
+        // Otherwise, start adding directions
+        $queue[] = [$nx, $ny];
+    
+        // If we hit an open spot, move everything before it
+        if ($next_char === '.') {
+            foreach ($queue as [$qx, $qy]) {
+                $map[$qy][$qx] = 'O';
             }
-
-            $queue[] = [$x,$i];
-
-            // If we hit an open spot, move everything before it
-            if ( $next_char === '.' ) {
-                foreach( $queue as $q ) {
-                    $map[$q[1]][$q[0]] = 'O';
-                }
-                break;
-            }
-        }
-    }
-
-    if ( '^' == $dir ) {
-        for ( $i = $y; $i >= 0; $i-- ) {
-            $next_char = $map[$i][$x];
-
-            // If we hit a wall, stop everything
-            if ( $next_char === '#' ) {
-                $can_move = false;
-                break;
-            }
-
-            $queue[] = [$x,$i];
-
-            // If we hit an open spot, move everything before it
-            if ( $next_char === '.' ) {
-                foreach( $queue as $q ) {
-                    $map[$q[1]][$q[0]] = 'O';
-                }
-                break;
-            }
+            break;
         }
     }
 
@@ -204,7 +158,7 @@ function show_map( $map ) {
     echo "\n";
 }
 
-echo PHP_EOL . 'Day 15: TITLE' . PHP_EOL . 'Part 1: ';
+echo PHP_EOL . 'Day 15: Warehouse Woes' . PHP_EOL . 'Part 1: ';
 part_one($dataset);
 echo PHP_EOL . 'Part 2: ';
 part_two($dataset);
