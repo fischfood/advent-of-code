@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Day DAY: TITLE
  */
@@ -17,7 +16,7 @@ include_once( '../functions.php' );
 
 // Part One
 function part_one($dataset) {
-    # Do Stuff
+	# Do Stuff
 }
 
 // Part Two
