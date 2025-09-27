@@ -2,6 +2,7 @@
 /**
  * Day 11: Corporate Policy
  * Part 1: .43996 Seconds
+ * Part 2: 1.6342 Seconds
  */
 
 // The usual
@@ -20,20 +21,21 @@ function part_one($dataset) {
 
 	while( $run ) {
 
+		$numbers = increment_letters( $numbers );
+
 		if ( rule_check( $numbers ) ) {
 			break;
 		}
 
-		$numbers = increment_letters( $numbers );
 	}
 
-	echo implode( '', array_map( function( $n ) { return chr( $n + 97 ); }, $numbers ) );
+	return implode( '', array_map( function( $n ) { return chr( $n + 97 ); }, $numbers ) );
 
 }
 
 // Part Two
 function part_two($dataset) {
-	# Do More Things
+	// Not needed, just run part one within part one
 }
 
 function increment_letters( $numbers ) {
@@ -123,9 +125,9 @@ function rule_check( $numbers ) {
 }
 
 echo PHP_EOL . 'Day 11: Corporate Policy' . PHP_EOL . 'Part 1: ';
-part_one($dataset);
+echo part_one($dataset);
 echo PHP_EOL . 'Part 2: ';
-part_two($dataset);
+echo part_one( part_one($dataset) );
 echo PHP_EOL;
 echo 'Total time to generate: ' . ( microtime( true ) - $starttime );
 echo PHP_EOL;
