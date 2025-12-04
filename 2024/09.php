@@ -84,10 +84,11 @@ function part_two($dataset) {
         
     }
 
-    // print_r( $blocks );
+    //print_r( $blocks );
 
-    // $string = implode('', $blocks );
-    // echo $string;
+    $string = implode('', $blocks );
+    echo $string;
+    print_r( $blocks );
 
     // while( str_contains( $string, '.' )) {
     //     echo "\n";
@@ -95,7 +96,7 @@ function part_two($dataset) {
     //     $next_pos = array_search( '.', $blocks );
     //     $last = end( $blocks );
 
-    //     echo $last;
+    //     echo $last . ' - ' . strlen( $last );
 
     //     if ( ! str_contains( $last, '.' ) ) {
     //         $blocks[ $next_pos ] = $last;
@@ -106,6 +107,8 @@ function part_two($dataset) {
     //     array_pop( $blocks );
     //     $string = implode( '', $blocks );
     // }
+
+    // echo $string;
 
     // foreach( $blocks as $k => $b ) {
     //     $total += ( $k * $b );
