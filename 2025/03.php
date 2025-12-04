@@ -1,7 +1,7 @@
 <?php
 /**
  * Day 03: Lobby
- * Part 1: 0.00128 Seconds (20m05s - 2979th)
+ * Part 1: 0.00128 Seconds (20m05s - 4092nd)
  * Part 2: 0.00251 Seconds (31m29s - 2369th)
  */
 
