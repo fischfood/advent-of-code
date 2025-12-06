@@ -1,6 +1,8 @@
 <?php
 /**
- * Day 05: TITLE
+ * Day 05: Cafeteria
+ * Part 1: 0.00100 Seconds (05m36s - N/A - 56913rd)
+ * Part 2: 0.00036 Seconds (36m49s - N/A - 488847th)
  */
 
 // The usual
@@ -12,6 +14,7 @@ $dataset = explode("\n\n", $data);
 
 // Part One
 function part_one($dataset) {
+
 	$pass = 0;
 	[ $fresh, $ingredients ] = $dataset;
 
@@ -19,15 +22,18 @@ function part_one($dataset) {
 	$ingredients = explode( "\n", $ingredients );
 
 	foreach( $ingredients as $i ) {
+		
 		$this_pass = 0;
+
+		// Check if this ingredient is fresh across all lists
 		foreach( $fresh as $f ) {
 			$range = explode( '-', $f );
 			if ( $i >= $range[0] && $i <= $range[1] ) {
 				$this_pass++;
-				continue;
 			}
 		}
 
+		// Doesn't matter how many ranges it passes, it's one ingredient that passes
 		if ( $this_pass > 0 ) {
 			$pass++;
 		}
@@ -39,10 +45,52 @@ function part_one($dataset) {
 
 // Part Two
 function part_two($dataset) {
-	# Do More Things
+
+	$total = 0;
+	$fresh_ranges = $dataset[0];
+
+	$fresh = explode( "\n", $fresh_ranges );
+	$ranges = [];
+
+	// Convert string to array range
+	foreach( $fresh as $k => $f ) {
+		$fresh[$k] = explode('-', $f);
+	}
+
+	// Sort by lowest starting
+	usort(
+		$fresh,
+		function ( $a, $b ) {
+			return $a['0'] <=> $b['0'];
+		}
+	);
+
+	// Use first as baseline;
+	$ranges[] = $fresh[0];
+	$i = 0;
+
+	// Check each array after to see if it extends the bounds (or sits within is fine too)
+	foreach( array_slice( $fresh, 1 ) as $next ) {
+		if ( $next[0] <= $ranges[$i][1] ) {
+			$ranges[$i][1] = max( $next[1], $ranges[$i][1] );
+
+		} else {
+			// If not, start a new range to compare against
+			$i++;
+			$ranges[$i] = $next;
+		}
+	}
+
+	// Count how many are in the range, and add it to the total
+	foreach( $ranges as $range ) {
+		$total += $range[1] - $range[0] + 1;
+	}
+
+	echo $total;
+
 }
 
-echo PHP_EOL . 'Day 05: TITLE' . PHP_EOL . 'Part 1: ';
+echo PHP_EOL . 'Day 05: Cafeteria' . PHP_EOL . 'Part 1: ';
 part_one($dataset);
 echo PHP_EOL . 'Part 2: ';
 part_two($dataset);
