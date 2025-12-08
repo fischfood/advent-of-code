@@ -1,8 +1,8 @@
 <?php
 /**
  * Day 08: Playground
- * Part 1: 1.17599 Seconds (27m25s - 1328th)
- * Part 2: 1.18189 Seconds (47m34s - 2158th)
+ * Part 1: 0.49840 Seconds (27m25s - 1328th)
+ * Part 2: 0.51574 Seconds (47m34s - 2158th)
  */
 
 // The usual
@@ -97,7 +97,7 @@ function determine_distances( $data ) {
 		for ( $j = $i + 1; $j < count( $data ); $j++ ) {
 
 			// Calculate distance and use as key, giving wiggle room for precision
-			$distance = (string) round( distance_3d( $data[$i], $data[$j] ), 6 );
+			$distance = distance_3d( $data[$i], $data[$j] );
 			$distances[ $distance ] = [$i, $j];
 		}
 	}
@@ -119,7 +119,7 @@ function distance_3d( $p1, $p2 ) {
 	$dy = $bxyz[1] - $axyz[1];
 	$dz = $bxyz[2] - $axyz[2];
 
-	return sqrt( ($dx * $dx) + ($dy * $dy) + ($dz * $dz) );
+	return ($dx * $dx) + ($dy * $dy) + ($dz * $dz);
 }
 
 function determine_groupings( $a, $b, $groups ) {
