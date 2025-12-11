@@ -83,24 +83,35 @@ function part_two($dataset) {
 			$max_presses[$bidx] = $mp;
 		};
 
-		$combinations = generate_combinations( $max_presses );
 
-		// Now run through combinations until we find a match to the target $joltage
-		foreach( $combinations as $combination ) {
-			$start = array_fill( 0, count( $joltage ), 0 );
-			foreach( $combination as $bidx => $presses ) {
-				if ( $presses > 0 ) {
-					$buttons = explode( ',', $wiring[$bidx] );
-					foreach( $buttons as $button ) {
-						$start[$button] += $presses;
-					}
-				}
-				// echo implode( ',', $start ) . ' vs ' . implode( ',', $joltage ) . PHP_EOL;
+		// call PuLP ILP helper to solve the integer minimization per row
+		$wiring_parsed = array_map(function($s){ return array_map('intval', explode(',', $s)); }, $wiring);
+		$payload = [ 'wiring' => $wiring_parsed, 'target' => array_map('intval', $joltage), 'max_presses' => $max_presses ];
 
-				if ( $start == $joltage && array_sum( $combination ) < $this_presses ) {
-					$this_presses = array_sum( $combination );
-				}
-			}
+		$helperPath = __DIR__ . '/tools/ilp_helper.py';
+		
+		// Use the specific Python interpreter and run in clean environment
+		$cmd = '/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 ' . escapeshellarg($helperPath);
+		$descriptorSpec = [ 0 => ['pipe', 'r'], 1 => ['pipe', 'w'], 2 => ['pipe', 'w'] ];
+
+		// run helper in a clean working dir and clear PYTHONPATH to avoid local source imports
+		$env = ['PYTHONPATH' => ''];
+		$proc = @proc_open($cmd, $descriptorSpec, $pipes, '/tmp', $env);
+
+		if (!is_resource($proc)) {
+			echo PHP_EOL . "Could not start SciPy helper (proc_open failed)." . PHP_EOL;
+			return;
+		}
+		fwrite($pipes[0], json_encode($payload));
+		fclose($pipes[0]);
+
+		$out = stream_get_contents($pipes[1]); fclose($pipes[1]);
+		$err = stream_get_contents($pipes[2]); fclose($pipes[2]);
+		$rc = proc_close($proc);
+		$result = json_decode($out, true);
+
+		if ($result && isset($result['presses']) && $result['presses'] !== null) {
+			$this_presses = array_sum($result['presses']);
 		}
 
 		$total_presses += $this_presses;
@@ -110,49 +121,9 @@ function part_two($dataset) {
 	echo $total_presses;
 }
 
-function generate_combinations( array $maxes ) {
-	$results = [];
-
-	$count   = count( $maxes );
-	if ( $count === 0 ) {
-		return $results;
-	}
-
-	// Start at all zeros.
-	$current = array_fill( 0, $count, 0 );
-
-	while ( true ) {
-		$results[] = $current;
-
-		// Increment like an odometer from the last position backwards.
-		$pos = $count - 1;
-
-		while ( $pos >= 0 ) {
-			if ( $current[ $pos ] < $maxes[ $pos ] ) {
-				// We can increment this position.
-				$current[ $pos ]++;
-
-				// Reset all positions to the right back to 0.
-				for ( $i = $pos + 1; $i < $count; $i++ ) {
-					$current[ $i ] = 0;
-				}
-
-				// Successfully incremented; go record next combination.
-				break;
-			} else {
-				// This position is at its max; carry to the left.
-				$pos--;
-			}
-		}
-
-		// If we ran past the leftmost position, we’re done.
-		if ( $pos < 0 ) {
-			break;
-		}
-	}
-
-	return $results;
-}
+/**
+ * generate_combinations removed — not used.
+ */
 
 echo PHP_EOL . 'Day 10: TITLE' . PHP_EOL . 'Part 1: ';
 // part_one($dataset);
