@@ -7,6 +7,7 @@
 $starttime = microtime(true);
 $data = file_get_contents('data/data-11.txt');
 // $data = file_get_contents('data/data-11-sample.txt');
+// $data = file_get_contents('data/data-11-sample-2.txt');
 
 $rows = explode("\n", $data);
 $steps = str_split($data, 1);
@@ -54,11 +55,36 @@ function follow_path( $paths_to_check, $cur_path, $paths_followed, $paths, $exit
 
 // Part Two
 function part_two($dataset) {
-	# Do More Things
+	$paths = [];
+	$exits = [];
+
+	foreach( $dataset as $row ) {
+		[ $name, $outputs ] = explode( ': ', $row );
+
+		if ( $outputs == 'out' ) {
+			$exits[] = $name;
+		} else {
+			$paths[$name] = explode( ' ', $outputs );
+		}
+	}
+
+	$begin = $paths['svr'];
+
+	$finished_paths = follow_path( $begin, 'svr', [], $paths, $exits );
+
+	$fft_dac = 0;
+
+	foreach ( $finished_paths as $path ) {
+		if ( str_contains( $path, ' fft ' ) && str_contains( $path, ' dac ' ) ) {
+			$fft_dac++;
+		}
+	}
+
+	echo $fft_dac;
 }
 
 echo PHP_EOL . 'Day 11: TITLE' . PHP_EOL . 'Part 1: ';
-part_one($dataset);
+// part_one($dataset);
 echo PHP_EOL . 'Part 2: ';
 part_two($dataset);
 echo PHP_EOL;
