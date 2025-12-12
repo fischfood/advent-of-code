@@ -1,6 +1,7 @@
 <?php
 /**
- * Day 12: TITLE
+ * Day 12: Christmas Tree Farm
+ * Part 1: 0.00087 Seconds (35m40s - < 969th, realistically 25m27s)
  */
 
 // The usual
@@ -52,7 +53,7 @@ function part_two($dataset) {
 	# Do More Things
 }
 
-echo PHP_EOL . 'Day 12: TITLE' . PHP_EOL . 'Part 1: ';
+echo PHP_EOL . 'Day 12: Christmas Tree Farm' . PHP_EOL . 'Part 1: ';
 part_one($dataset);
 echo PHP_EOL . 'Part 2: ';
 part_two($dataset);
