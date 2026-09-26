@@ -1,12 +1,14 @@
 <?php
 /**
  * Day 01: Secret Entrance
+ * Part 1: 0.00192 Seconds (23h - N/A)
+ * Part 2: 0.00316 Seconds (>24h - N/A)
  */
 
 // The usual
 $loctime = microtime(true);
 $data = file_get_contents('data/data-01.txt');
-$data = file_get_contents('data/data-01-sample.txt');
+// $data = file_get_contents('data/data-01-sample.txt');
 
 
 $dataset = explode("\n", $data);
@@ -50,9 +52,6 @@ function part_one($dataset) {
 // Part Two
 function part_two( $dataset ) {
 
-	$min  = 0;
-	$max  = 99;
-	$span = $max - $min + 1;
 	$cur_pos  = 50;
 	$zero = 0;
 
@@ -62,35 +61,41 @@ function part_two( $dataset ) {
 
 		[ $full, $dir, $num ] = $matches;
 
-		$last_pos = $cur_pos;
+		// Every 100 is a full rotation
+		$zero += floor( $num / 100 );
 
-		// Forget the reset, keep it on a solid line
-		if ( 'L' === $dir ) {
-			$cur_pos -= $num;
+		// Remaining num to move
+		$remaining_clicks = $num % 100;
+
+		if ( $dir === 'R' ) {
+
+			// Distance until we hit 0 when moving right
+			$steps_to_zero = (100 - $cur_pos) % 100;  
+
+			// We hit 0 only if 0 is reached within remainder steps
+			if ($steps_to_zero > 0 && $steps_to_zero <= $remaining_clicks) {
+				$zero++;
+			}
+
+			// Move position
+			$cur_pos = ($cur_pos + $remaining_clicks) % 100;
+
 		} else {
-			$cur_pos += $num;
+
+			if ($cur_pos > 0 && $cur_pos <= $remaining_clicks) {
+				$zero++;
+			}
+
+			$cur_pos = ($cur_pos - $remaining_clicks);
+
+			if ($cur_pos < 0) {
+				$cur_pos += 100;
+			}
 		}
 
-		// Check if we're ending on a multiple of 100
-		if ( $cur_pos % $span === 0 ) {
-			$zero++;
-		}
-
-		// Set your numbers as the next lowest integer / 100
-		// 58 / 100 = 0.58 = 0
-		// 104 / 100 = 1.04 = 1
-		// -22 / 100 = -0.22 = -1
-
-		$starting_span = floor( $last_pos / $span );
-		$ending_span = floor( $cur_pos / $span );
-
-		// Calculate the change distance and add it to that many zeros being crossed
-		$range_changes = abs( $ending_span - $starting_span );
-
-		$zero += $range_changes;
 	}
 
-	echo $zero;
+	echo $zero;	
 }
 
 
