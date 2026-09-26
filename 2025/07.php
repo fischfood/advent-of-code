@@ -2,6 +2,7 @@
 /**
  * Day 07: Laboratories
  * Part 1: 0.00639 Seconds (41m27s - N/A)
+ * Part 2: 0.00955 Seconds (>24h - N/A)
  */
 
 // The usual
@@ -89,14 +90,62 @@ function part_one($dataset) {
 }
 
 // Part Two
-function part_two($dataset) {
-	# Do More Things
+function part_two( $dataset ) {
+	$grid = [];
+	$splits = [];
+	$start  = '';
+
+	$height = count( $dataset );
+
+	foreach ( $dataset as $y => $row ) {
+		foreach ( str_split( $row ) as $x => $char ) {
+			$grid[ $y ][ $x ] = $char;
+
+			if ( $char === 'S' ) {
+				$start = $y . ',' . $x;
+			}
+
+			if ( $char === '^' ) {
+				$splits[$y . ',' . $x] = '^';
+			}
+		}
+	}
+
+	[ $y, $x ] = explode( ',', $start );
+	$check = array( (int) $x => 1 );
+
+	while ( $y < $height ) {
+		$next = array();
+
+		foreach ( $check as $x => $count ) {
+			if ( array_key_exists( $y . ',' . $x, $splits ) ) {
+				foreach ( array( $x + 1, $x - 1 ) as $sx ) {
+					if ( ! isset( $next[ $sx ] ) ) {
+						$next[ $sx ] = 0;
+					}
+
+					$next[ $sx ] += $count;
+				}
+			} else {
+				if ( ! isset( $next[ $x ] ) ) {
+					$next[ $x ] = 0;
+				}
+
+				$next[ $x ] += $count;
+			}
+		}
+
+		$check = $next;
+		$y++;
+	}
+
+	echo array_sum( $check );
 }
 
 echo PHP_EOL . 'Day 07: TITLE' . PHP_EOL . 'Part 1: ';
-part_one($dataset);
+part_one( $dataset );
 echo PHP_EOL . 'Part 2: ';
-part_two($dataset);
+part_two( $dataset );
 echo PHP_EOL;
 echo 'Total time to generate: ' . ( microtime( true ) - $starttime );
 echo PHP_EOL;
