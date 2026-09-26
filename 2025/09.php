@@ -16,24 +16,30 @@ function part_one($dataset) {
 
 	$rectangles = [];
 
-	// Compare all points to each other
-	for ( $i = 0; $i < count( $dataset ); $i++ ) {
-		for ( $j = $i + 1; $j < count( $dataset ); $j++ ) {
+	foreach ( $dataset as $line ) {
+		if ( trim( $line ) !== '' ) {
+			$rectangles[] = array_map( 'intval', explode( ',', $line ) );
+		}
+	}
 
-			[ $ax, $ay ] = explode( ',', $dataset[$i] );
-			[ $bx, $by ] = explode( ',', $dataset[$j] );
+	$max = 0;
+
+	// Compare all points to each other
+	for ( $i = 0; $i < count( $rectangles ); $i++ ) {
+		for ( $j = $i + 1; $j < count( $rectangles ); $j++ ) {
+
+			[ $ax, $ay ] = $rectangles[$i];
+			[ $bx, $by ] = $rectangles[$j];
 
 			$h = abs( $bx - $ax) + 1;
 			$w = abs( $by - $ay) + 1;
 			$area = $h * $w;
 
-			$rectangles[] = $area;
+			$max = max( $max, $area );
 		}
 	}
 
-	arsort( $rectangles );
-
-	echo array_shift( $rectangles );
+	echo $max;
 
 }
 
