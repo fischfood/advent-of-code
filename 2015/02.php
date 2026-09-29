@@ -5,11 +5,13 @@
  */
 
 // The usual
-$data = file_get_contents('data/data-02.txt');
-$rows = explode("\n", $data);
+// $data = file_get_contents('data/data-02.txt');
+// $rows = explode("\n", $data);
 
 $sample_a = ['2x3x4'];
 $sample_b = ['1x1x10'];
+
+$rows = $sample_a;
 
 $dataset = $rows;
 

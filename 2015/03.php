@@ -5,10 +5,14 @@
  */
 
 // The usual
-$data = file_get_contents('data/data-03.txt');
-$sample_a = '>';
+// $data = file_get_contents('data/data-03.txt');
+
+$sample_a1 = '>';
+$sample_a2 = '^>';
 $sample_b = '^>v<';
 $sample_c = '^v^v^v^v^v';
+
+$data = $sample_a2;
 
 $dataset = $data;
 

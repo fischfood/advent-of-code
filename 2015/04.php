@@ -5,10 +5,11 @@
  */
 
 // The usual
-$data = file_get_contents('data/data-04.txt');
+// $data = file_get_contents('data/data-04.txt');
 $sample_a = 'abcdef';
 $sample_b = 'pqrstuv';
 
+$data = $sample_a;
 $key = $data;
 
 // Part One

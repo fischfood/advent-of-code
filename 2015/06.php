@@ -5,8 +5,15 @@
  */
 
 // The usual
-$data = file_get_contents('data/data-06.txt');
-$rows = explode("\n", $data);
+// $data = file_get_contents('data/data-06.txt');
+// $rows = explode("\n", $data);
+
+$rows = [
+	'turn on 0,0 through 999,999',
+	'toggle 0,0 through 999,0',
+	'turn off 499,499 through 500,500'
+];
+
 $dataset = $rows;
 
 // Part One
@@ -125,7 +132,7 @@ function part_two($dataset) {
 }
 
 echo PHP_EOL . 'Day 06: Probably a Fire Hazard' . PHP_EOL . 'Part 1: ';
-//part_one($dataset);
+part_one($dataset);
 echo PHP_EOL . 'Part 2: ';
 part_two($dataset);
 echo PHP_EOL . PHP_EOL;

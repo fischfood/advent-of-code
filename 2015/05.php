@@ -5,13 +5,13 @@
  */
 
 // The usual
-$data = file_get_contents('data/data-05.txt');
-$rows = explode("\n", $data);
+// $data = file_get_contents('data/data-05.txt');
+// $rows = explode("\n", $data);
 
 $sample_1 = ['ugknbfddgicrmopn', 'aaa', 'jchzalrnumimnmhp', 'haegwjzuvuyypxyu', 'dvszwmarrgswjxmb' ];
 $sample_2 = ['qjhvhtzxzqqjkmpb', 'xxyxx', 'uurcxstgmygtbstg', 'ieodomkazucvgmuy'];
 
-$dataset = $rows;
+$dataset = $sample_1;
 
 // Part One - How many strings are nice?
 function part_one($dataset) {

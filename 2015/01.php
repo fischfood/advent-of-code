@@ -5,13 +5,15 @@
  */
 
 // The usual
-$data = file_get_contents('data/data-01.txt');
+// $data = file_get_contents('data/data-01.txt');
 
 $sample_1a = '))(((((';
 $sample_1b = ')())())';
 
 $sample_2a = ')';
 $sample_2b = '()())';
+
+$data = $sample_1a;
 
 $dataset = $data;
 

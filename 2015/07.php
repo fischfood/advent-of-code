@@ -8,8 +8,19 @@
 
 // The usual
 $starttime = microtime(true);
-$data = file_get_contents('data/data-07.txt');
-//$data = file_get_contents('data/data-07-sample.txt');
+$sample = true;
+
+if ( $sample ) {
+    $data = file_get_contents('data/data-07-sample.txt');
+	$target = 'd';
+	$override = 'b';
+} else {
+    $data = file_get_contents('data/data-07.txt');
+	$target = 'a';
+	$override = 'b';
+}
+
+
 
 $rows = explode("\n", $data);
 $steps = str_split($data, 1);
@@ -17,7 +28,7 @@ $steps = str_split($data, 1);
 $dataset = $rows;
 
 // Part One
-function part_one($dataset) {
+function part_one($dataset, $target = 'a') {
 
     $set = [];
     $actions = [];
@@ -46,12 +57,12 @@ function part_one($dataset) {
     // Loop until we run out of actions, and every wire has been assigned
     $set = run_loop_through( $set, $actions );
 
-    // Give us the answer for a, returned since we need it for Part Two
-    return bindec($set['a']);
+    // Give us the answer for $target, returned since we need it for Part Two
+    return bindec($set[$target]);
 }
 
 // Part Two
-function part_two($dataset) {
+function part_two($dataset, $target = 'a', $override = 'b') {
 	$set = [];
     $actions = [];
 
@@ -77,14 +88,14 @@ function part_two($dataset) {
         }
     }
 
-    // Set $wire 'b' to equal the binary of 'a' from Part One
-    $set['b'] = decbin( part_one($dataset) );
+    // Set $override to equal the binary of $target from Part One
+    $set[$override] = str_pad( decbin( part_one($dataset, $target) ), 16, "0", STR_PAD_LEFT );
 
     // Loop until we run out of actions, and every wire has been assigned
     $set = run_loop_through( $set, $actions );
 
     // Give us the final number
-    echo bindec($set['a']);
+    echo bindec($set[$target]);
 }
 
 function run_loop_through( $set, $actions ) {
@@ -230,9 +241,9 @@ function evaluate_binary( $todo, $set, $character ) {
 }
 
 echo PHP_EOL . 'Day 07: Some Assembly Required' . PHP_EOL . 'Part 1: ';
-echo part_one($dataset);
+echo part_one($dataset, $target);
 echo PHP_EOL . 'Part 2: ';
-part_two($dataset);
+part_two($dataset, $target, $override);
 echo PHP_EOL;
 echo 'Total time to generate: ' . ( microtime( true ) - $starttime );
 echo PHP_EOL;
