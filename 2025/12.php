@@ -6,8 +6,8 @@
 
 // The usual
 $starttime = microtime(true);
-$data = file_get_contents('data/data-12.txt');
 $data = file_get_contents('data/data-12-sample.txt');
+// $data = file_get_contents('data/data-12.txt');
 
 $dataset = explode("\n\n", $data);
 
