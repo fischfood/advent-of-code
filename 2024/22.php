@@ -8,7 +8,7 @@
 // The usual
 ini_set('memory_limit', '10G');
 $starttime = microtime(true);
-$data = file_get_contents('data/data-22.txt');
+// $data = file_get_contents('data/data-22.txt');
 $data = file_get_contents('data/data-22-sample.txt');
 $data = 123;
 

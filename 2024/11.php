@@ -8,8 +8,8 @@ ini_set('memory_limit', '10G');
 
 // The usual
 $starttime = microtime(true);
-$data = file_get_contents('data/data-11.txt');
-//$data = file_get_contents('data/data-11-sample.txt');
+$data = file_get_contents('data/data-11-sample.txt');
+// $data = file_get_contents('data/data-11.txt');
 
 $dataset = explode( ' ', $data );
 

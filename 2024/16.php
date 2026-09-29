@@ -7,9 +7,9 @@
 // The usual
 ini_set('memory_limit', '10G');
 $starttime = microtime(true);
-$data = file_get_contents('data/data-16.txt');
 $data = file_get_contents('data/data-16-sample.txt');
 $data = file_get_contents('data/data-16-sample-2.txt');
+// $data = file_get_contents('data/data-16.txt');
 
 $rows = explode("\n", $data);
 $steps = str_split($data, 1);

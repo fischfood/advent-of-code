@@ -8,8 +8,8 @@
 
 // The usual
 $starttime = microtime(true);
-$data = file_get_contents('data/data-09.txt');
 $data = file_get_contents('data/data-09-sample.txt');
+// $data = file_get_contents('data/data-09.txt');
 
 $rows = explode("\n", $data);
 $steps = str_split($data, 1);
