@@ -5,8 +5,8 @@
  */
 
 // The usual
-$data = file_get_contents('data/data-24.txt');
-//$data = file_get_contents('data/data-24-sample.txt');
+$data = file_get_contents('data/data-24-sample.txt');
+// $data = file_get_contents('data/data-24.txt');
 
 $min = 200000000000000; $max = 400000000000000;
 //$min = 7; $max = 27;

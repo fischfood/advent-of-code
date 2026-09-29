@@ -5,13 +5,14 @@
  */
 
 // The usual
-$data = file_get_contents('data/data-01.txt');
-//$data = file_get_contents('data/data-01-sample.txt');
-//$data = file_get_contents('data/data-01-sample-2.txt');
+$sample = true;
 
-$rows = explode("\n", $data);
-
-$dataset = $rows;
+if ( $sample ) {
+	$dataset_1 = explode("\n", file_get_contents('data/data-01-sample.txt'));
+	$dataset_2 = explode("\n", file_get_contents('data/data-01-sample-2.txt'));
+} else {
+	$dataset_1 = $dataset_2 = explode("\n", file_get_contents('data/data-01.txt'));
+}
 
 // Part One - Combine first and last digits and add them to total
 function part_one($dataset) {
@@ -60,7 +61,7 @@ function part_two($dataset) {
 }
 
 echo PHP_EOL . 'Day 01: Trebuchet?!' . PHP_EOL . 'Part 1: ';
-part_one($dataset);
+part_one($dataset_1);
 echo PHP_EOL . 'Part 2: ';
-part_two($dataset);
+part_two($dataset_2);
 echo PHP_EOL . PHP_EOL;

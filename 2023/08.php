@@ -5,8 +5,8 @@
  */
 
 // The usual
-$data = file_get_contents('data/data-08.txt');
-//$data = file_get_contents('data/data-08-sample.txt');
+// $data = file_get_contents('data/data-08.txt');
+$data = file_get_contents('data/data-08-sample.txt');
 //$data = file_get_contents('data/data-08-sample-2.txt');
 //$data = file_get_contents('data/data-08-sample-3.txt');
 

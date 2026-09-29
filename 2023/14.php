@@ -7,8 +7,8 @@ ini_set('memory_limit', '10G');
  */
 
 // The usual
-$data = file_get_contents('data/data-14.txt');
-//$data = file_get_contents('data/data-14-sample.txt');
+$data = file_get_contents('data/data-14-sample.txt');
+// $data = file_get_contents('data/data-14.txt');
 
 $rows = explode("\n", $data);
 
