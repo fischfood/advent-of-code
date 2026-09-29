@@ -5,8 +5,8 @@
  */
 
 // The usual
-$data = file_get_contents('data/data-11.txt');
-//$data = file_get_contents('data/data-11-sample.txt');
+// $data = file_get_contents('data/data-11.txt');
+$data = file_get_contents('data/data-11-sample.txt');
 $rows = explode("\n", $data);
 
 // Check over 20 rounds

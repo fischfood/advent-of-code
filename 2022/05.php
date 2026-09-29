@@ -4,7 +4,8 @@
  * Day 5: Supply Stacks
  */
 
-$data = file_get_contents('data/data-05.txt');
+// $data = file_get_contents('data/data-05.txt');
+$data = file_get_contents('data/data-05-sample.txt');
 $rows = explode("\n", $data);
 
 // Create arrays for both parts

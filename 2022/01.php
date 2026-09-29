@@ -5,7 +5,8 @@
  */
 
 // Get data from the list of elves and their calories
-$data = file_get_contents('data/data-01.txt');
+// $data = file_get_contents('data/data-01.txt');
+$data = file_get_contents('data/data-01-sample.txt');
 
 // Elves are split by a double line break, so we will break each elf group into an array
 $rows = explode("\n\n", $data);
@@ -59,6 +60,11 @@ foreach( $rows as $row ) {
 		$high    = $higher;
 		$higher  = $highest;
 		$highest = $value;
+	} elseif ( $value > $higher ) {
+		$high   = $higher;
+		$higher = $value;
+	} elseif ( $value > $high ) {
+		$high = $value;
 	}
 }
 

@@ -4,7 +4,8 @@
  * Day 2: Rock Paper Scissors
  */
 
-$data = file_get_contents('data/data-02.txt');
+// $data = file_get_contents('data/data-02.txt');
+$data = file_get_contents('data/data-02-sample.txt');
 $rows = explode("\n", $data);
 $points = [];
 

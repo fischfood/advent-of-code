@@ -4,7 +4,8 @@
  * Day 4: Camp Cleanup
  */
 
-$data = file_get_contents('data/data-04.txt');
+// $data = file_get_contents('data/data-04.txt');
+$data = file_get_contents('data/data-04-sample.txt');
 $rows = explode("\n", $data);
 
 // Set totals since we know well need it

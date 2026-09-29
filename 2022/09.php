@@ -5,7 +5,8 @@
  */
 
 // The usual
-$data = file_get_contents('data/data-09.txt');
+// $data = file_get_contents('data/data-09.txt');
+$data = file_get_contents('data/data-09-sample.txt');
 $rows = explode("\n", $data);
 
 // Set starting points for the head and tail, add the initial location to the "Visited" array

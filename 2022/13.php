@@ -5,8 +5,8 @@
  */
 
 // The usual
-$data = file_get_contents('data/data-13.txt');
-//$data = file_get_contents('data/data-13-sample.txt');
+// $data = file_get_contents('data/data-13.txt');
+$data = file_get_contents('data/data-13-sample.txt');
 
 $rows = explode("\n", $data);
 $display = false;

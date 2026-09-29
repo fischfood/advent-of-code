@@ -8,7 +8,8 @@
  * A through Z = 27 through 52
  */
 
-$data = file_get_contents('data/data-03.txt');
+// $data = file_get_contents('data/data-03.txt');
+$data = file_get_contents('data/data-03-sample.txt');
 $rows = explode("\n", $data);
 
 // Set arrays for all letters to assign values to later

@@ -4,7 +4,8 @@
  * Day 6: Tuning Trouble
  */
 
-$data = file_get_contents('data/data-06.txt');
+// $data = file_get_contents('data/data-06.txt');
+$data = file_get_contents('data/data-06-sample.txt');
 
 // The data is all on one line, so break it apart by character
 $characters = str_split( $data );

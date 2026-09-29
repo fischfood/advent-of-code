@@ -1,24 +1,3 @@
-<style type="text/css">
-    body {
-        margin: 0;
-        padding: 0;
-    }
-    div {
-        display: inline;
-        flex: 0 0 150px;
-        padding: 1rem
-
-    }
-    .container {
-        display: flex;
-        width: 100vw;
-        overflow-x: auto;
-        overflow-y: hidden;
-        white-space: nowrap;
-        box-sizing: border-box;
-    }
-</style>
-
 <?php
 $starttime = microtime(true);
 
@@ -27,11 +6,11 @@ $starttime = microtime(true);
  */
 
 // The usual
-$data = file_get_contents('data/data-14.txt');
+// $data = file_get_contents('data/data-14.txt');
 $data = file_get_contents('data/data-14-sample.txt');
 
 // Show grid and math?
-$display = true;
+$display = false;
 
 $rows = explode("\n", $data);
 
@@ -299,11 +278,11 @@ function let_the_sand_flow( $flow = false ) {
  * Part One
  */
 
-function part_one() {
+function part_one( $display = false) {
     global $sand_positions;
 
     // Build a side scrolling container for when $display = true;
-    echo '<div class="container">';
+    if ( $display ) echo '<div class="container">';
 
     create_rock_positions();
     build_grid();
@@ -312,7 +291,7 @@ function part_one() {
     $start = [500, 0];
     let_the_sand_flow( $start );
 
-    echo '</div>';
+    if ( $display ) { echo '</div>'; } else { echo "\n"; }
 
     echo 'Total sand granules until waterfall: ' . count( $sand_positions );
 }
@@ -329,7 +308,7 @@ function part_two() {
     $sand_positions = [];
 
     // New side scrolling container
-    echo '<div class="container">';
+    if ( $display ) echo '<div class="container">';
 
     // This will add the floor / bucket
     create_rock_positions( 'Now with 100% more floor!');
@@ -339,7 +318,7 @@ function part_two() {
     $start = [500, 0];
     let_the_sand_flow( $start );
 
-    echo '</div>';
+    if ( $display ) { echo '</div>'; } else { echo "\n"; }
 
     // When let_the_sand_flow is complete, it will give us sand within the bucket
     // We did this to save time and allow it to process (Sample data is two seconds this is over 10 minutes to run even without displaying )
@@ -377,11 +356,35 @@ function part_two() {
         echo 'We need ' . $max_col_needed . ' triangles to the right(' . $max_total . ')<br><br>';
     }
 
-    echo 'Total sand granules on the floor: ' . ( count( $sand_positions ) + $min_total + $max_total ) . '<br><br>';
+    echo 'Total sand granules on the floor: ' . ( count( $sand_positions ) + $min_total + $max_total );
+	if ( $display ) { echo '<br><br>'; } else { echo "\n\n"; }
 }
+
+if ( $display ): ?>
+<style type="text/css">
+    body {
+        margin: 0;
+        padding: 0;
+    }
+    div {
+        display: inline;
+        flex: 0 0 150px;
+        padding: 1rem
+
+    }
+    .container {
+        display: flex;
+        width: 100vw;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        box-sizing: border-box;
+    }
+</style>
+<?php endif;
 
 
 echo 'Day 14: Regolith Reservoir';
 part_one();
 part_two();
-echo '<br>Total time to generate: ' . (microtime( true ) - $starttime);
+echo 'Total time to generate: ' . (microtime( true ) - $starttime);

@@ -5,7 +5,8 @@
  */
 
 // The usual
-$data = file_get_contents('data/data-08.txt');
+// $data = file_get_contents('data/data-08.txt');
+$data = file_get_contents('data/data-08-sample.txt');
 $data_rows = explode("\n", $data);
 
 $tree_rows = [];
