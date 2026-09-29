@@ -1,0 +1,8 @@
+{
+	"editor.formatOnSave": false,
+	"[php]": {
+		"editor.formatOnSave": false
+	},
+	"phpsab.fixerEnable": false,
+	"phpsab.snifferEnable": false
+}

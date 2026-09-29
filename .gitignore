@@ -1,0 +1,6 @@
+# Puzzle inputs: ignore everything in any data/ folder except sample files
+**/data/*
+!**/data/*-sample*
+
+# Scratch test scripts
+*-TEST.php
